@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<xs:schema 
+    targetNamespace="http://xmlns.oracle.com/communications/project/fruit" 
+    xmlns:ient="http://xmlns.oracle.com/communications/project/fruit" 
+    xmlns="http://www.w3.org/2001/XMLSchema" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified">
+    <xs:complexType name="FruitType">
+        <xs:annotation>
+            <xs:documentation>An fruit entity.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="entityNote" type="xsd:string" nillable="false" minOccurs="0"/>
+			<xs:element name="entityLink" type="ient:FruitType" nillable="false" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The referenced entity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:group name="entityQueryCriteria">
+        <xs:choice>
+            <xs:element name="entity" type="ient:FruitType"
+                nillable="false" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="criteria" type="ient:SearchCriteriaType"
+                nillable="false" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:group>
+
+    <xs:complexType name="SearchCriteriaType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="entityType" type="ient:FruitType"
+                nillable="false" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="criteriaItem" type="ient:SearchCriteriaItemType"
+                nillable="false" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="property" type="ient:SearchCriteriaItemType"
+                nillable="false" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SearchCriteriaItemType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="name" type="xsd:string"
+                nillable="false" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="value" type="xsd:anyType"
+                nillable="false" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="operator" type="ient:CriteriaOperatorEnum"
+                nillable="false" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="CriteriaOperatorEnum">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xsd:string">
+            <xs:enumeration value="EQUALS" />
+            <xs:enumeration value="NOT_EQUALS" />
+            <xs:enumeration value="BEGINS_WITH" />
+            <xs:enumeration value="ENDS_WITH" />
+            <xs:enumeration value="CONTAINS" />
+			<xs:enumeration value="GREATER_THAN_EQUAL" />
+			<xs:enumeration value="LESS_THAN_EQUAL" />
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
